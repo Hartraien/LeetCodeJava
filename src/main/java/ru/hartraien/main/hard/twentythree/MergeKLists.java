@@ -6,56 +6,45 @@ public class MergeKLists
 {
     public static ListNode mergeKLists( ListNode[] lists )
     {
-        if ( lists.length == 0 )
-            return new ListNode();
-        ListNode[] pointers = new ListNode[lists.length];
+        if ( lists == null || lists.length == 0 )
+            return null;
+        int n = lists.length;
 
-        System.arraycopy( lists, 0, pointers, 0, lists.length );
+        while ( n > 1 )
+        {
+            int m = ( n + 1 ) / 2;
+            for ( int i = 0; i < n / 2; i++ )
+            {
+                lists[i] = mergeTwoLists( lists[i], lists[i + m] );
+            }
+            n = m;
+        }
+        return lists[0];
+    }
 
-
+    private static ListNode mergeTwoLists( ListNode list, ListNode list1 )
+    {
         ListNode base = new ListNode();
-        ListNode head = base;
+        ListNode curr = base;
 
-        while ( notAllNull( pointers ) )
+        while ( list != null && list1 != null )
         {
-            int minArg = findMin( pointers );
-
-            if ( minArg != -1 )
+            if ( list.val < list1.val )
             {
-                head.next = new ListNode( pointers[minArg].val );
-                head = head.next;
-                pointers[minArg] = pointers[minArg].next;
+                curr.next = list;
+                list = list.next;
+                curr = curr.next;
+            }
+            else
+            {
+                curr.next = list1;
+                list1 = list1.next;
+                curr = curr.next;
             }
         }
+
+        curr.next = list == null ? list1 : list;
+
         return base.next;
-
-    }
-
-    private static int findMin( ListNode[] pointers )
-    {
-        int min = Integer.MAX_VALUE;
-        int arg = -1;
-        for ( int i = 0; i < pointers.length; i++ )
-        {
-            if ( pointers[i] != null )
-            {
-                if ( pointers[i].val < min )
-                {
-                    min = pointers[i].val;
-                    arg = i;
-                }
-            }
-        }
-        return arg;
-    }
-
-    private static boolean notAllNull( ListNode[] pointers )
-    {
-        for ( var elem : pointers )
-        {
-            if ( elem != null )
-                return true;
-        }
-        return false;
     }
 }
