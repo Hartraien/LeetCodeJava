@@ -1,4 +1,4 @@
-package ru.hartraien.main.hard.fourtytwo;
+package ru.hartraien.main.hard.fourtyone;
 
 public class FirstMissingPositive {
     public static int firstMissingPositve(int[] nums) {
