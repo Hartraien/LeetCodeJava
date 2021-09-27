@@ -1,4 +1,4 @@
-package ru.hartraien.main.medium;
+package ru.hartraien.main.medium.seventythree;
 
 import java.util.BitSet;
 
